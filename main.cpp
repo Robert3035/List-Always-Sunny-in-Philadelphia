@@ -1,10 +1,37 @@
 #include <iostream>
 #include "list.h"
+#include "outfile"
+#include <fstream>
 
 using namespace std;
 
 int main(){
-    List l(9);
-    cout << l.get_iterator();
-    l.push_front(7);
+    List beiju;
+    ifstream fin;
+    fin.open("input2");
+    ofstream fout;
+    fout.open("outfile");
+    string testCase;
+    while(fin >> testCase){
+        for(int i = 0; i < testCase.size(); i++){
+            if(testCase[i] == '['){
+                beiju.begin();
+            }
+            else if(testCase[i] == ']'){
+                beiju.end();
+            }
+            else{
+                beiju.insert_after(testCase[i]);
+            }
+        }
+        beiju.begin();
+        while(beiju.get_iterator() != '['){
+            fout << beiju.get_iterator();
+            beiju.move_up();
+        }
+        beiju.clear();
+        fout << endl;
+    }
+    fout.close();
+    fin.close();
 }

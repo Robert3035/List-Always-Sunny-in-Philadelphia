@@ -1,16 +1,16 @@
 struct Node{
-    int val;
+    char val;
     Node* next;
 
     Node(){
         val = 0;
         next = nullptr;
     }
-    Node(int v){
+    Node(char v){
         val = v;
         next = nullptr;
     }
-    Node(int v, Node n){
+    Node(char v, Node n){
         val = v;
         next = &n;
     }
@@ -28,14 +28,18 @@ class List{
             it = nullptr;
             size = 0;
         }
-        List(int v){
+        List(char v){
             Node n(v);
             front = &n;
             it = &n;
             size = 1;
         }
-        int get_iterator(){//Return the value at the iterator
-            return it->val;
+        char get_iterator(){//Return the value at the iterator
+            if(it == nullptr){
+                return '[';
+            }
+            else
+                return it->val;
         }
         bool isEmpty(){//Checks whether the list is empty and returns a boolean
             if(front == nullptr){
@@ -50,10 +54,10 @@ class List{
                 it = it -> next;
             }
         }
-        int front(){//Returns the value that front is pointing at
+        char getFront(){//Returns the value that front is pointing at
             return front -> val;
         }
-        void push_front(int x){//Creates a new node at the beginning of the list
+        void push_front(char x){//Creates a new node at the beginning of the list
             Node temp(x, *front);
             front = &temp;
             size++;
@@ -63,13 +67,21 @@ class List{
             front = front->next;
             delete temp;
         }
-        void insert_after(int x){
+        void insert_after(char x){
             //Created new node, and temp pointer to help us insert it
-            Node toInsert(x);
-            Node * temp = &toInsert;
-            toInsert.next = it->next;
-            it->next = temp;
-            delete temp;
+            if(front == nullptr){
+                Node temp(x);
+                it = &temp;
+                front = &temp;
+            }
+            else{
+                Node toInsert(x);
+                Node * temp = &toInsert;
+                it->next = temp;
+                it = temp;
+                delete temp;
+            }
+            size++;
         }
         void clear(){//Clears the list
             front = nullptr;
