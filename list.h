@@ -3,16 +3,16 @@ struct Node{
     Node* next;
 
     Node(){
-        val = 0;
-        next = nullptr;
+        this->val = '0';
+        this->next = nullptr;
     }
     Node(char v){
-        val = v;
-        next = nullptr;
+        this->val = v;
+        this->next = nullptr;
     }
     Node(char v, Node n){
-        val = v;
-        next = &n;
+        this->val = v;
+        this->next = &n;
     }
 };
 
@@ -24,19 +24,19 @@ class List{
         bool empty;
     public:
         List(){
-            front = nullptr;
-            it = nullptr;
-            size = 0;
+            this->front = new Node('[');
+            this->it = front;
+            this->size = 0;
         }
         List(char v){
             Node n(v);
-            front = &n;
-            it = &n;
-            size = 1;
+            this->front = &n;
+            this->it = &n;
+            this->size = 1;
         }
         char get_iterator(){//Return the value at the iterator
             if(it == nullptr){
-                return '[';
+                return ']';
             }
             else
                 return it->val;
@@ -69,17 +69,16 @@ class List{
         }
         void insert_after(char x){
             //Created new node, and temp pointer to help us insert it
-            if(front == nullptr){
-                Node temp(x);
-                it = &temp;
-                front = &temp;
-            }
-            else{
-                Node toInsert(x);
-                Node * temp = &toInsert;
+            if(it->next != nullptr){
+                Node* temp = new Node(x);
+                temp->next = it->next;
                 it->next = temp;
                 it = temp;
-                delete temp;
+            }
+            else{
+                Node* temp = new Node(x);
+                it->next = temp;
+                it = temp;
             }
             size++;
         }

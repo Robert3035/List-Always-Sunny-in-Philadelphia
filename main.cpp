@@ -1,6 +1,5 @@
 #include <iostream>
 #include "list.h"
-#include "outfile"
 #include <fstream>
 
 using namespace std;
@@ -25,8 +24,10 @@ int main(){
             }
         }
         beiju.begin();
-        while(beiju.get_iterator() != '['){
-            fout << beiju.get_iterator();
+        while(beiju.get_iterator() != ']'){
+            if(beiju.get_iterator() != '['){
+                fout << beiju.get_iterator();
+            }
             beiju.move_up();
         }
         beiju.clear();
